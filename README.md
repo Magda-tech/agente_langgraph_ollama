@@ -38,11 +38,12 @@ Este guia explica como configurar e rodar um agente conversacional simples usand
     
 6. Abra o VS Code:
 
- use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter
+ use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter,
  escolha o interpretador Python do ambiente Conda criado (langgraph_ollama).
  
- Agora você pode rodar o arquivo Python direto no VS Code usando o botão de execução ou terminal integrado.
- Digite suas perguntas no terminal. Para sair, digite sair.
+ Agora você pode rodar o arquivo Python (agente_langgraph_ollama.py) direto no VS Code usando o botão de execução ou terminal integrado.
+ Digite suas perguntas no terminal. 
+ Para sair, digite sair.
 
 ## 🧪 Exemplos para testar
 
