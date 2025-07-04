@@ -2,6 +2,8 @@
 
 Este projeto implementa um agente inteligente local utilizando a biblioteca [LangGraph](https://python.langchain.com/docs/langgraph/) com suporte a modelos LLM via [Ollama](https://ollama.com/), permitindo interações personalizadas, incluindo cálculo, busca simulada e respostas com LLMs locais.
 
+Agora com suporte a **memória de contexto**, o assistente lembra das mensagens anteriores dentro da sessão.
+
 ## 🚀 Visão geral
 
 O agente é composto por:
@@ -12,6 +14,7 @@ O agente é composto por:
   - `calcular`: resolve perguntas matemáticas simples
   - `buscar`: simula uma busca local
   - `decidir`: atua como um roteador inteligente entre as opções acima ou aciona o modelo LLM para perguntas abertas
+- Suporte a **memória** com `MemorySaver`, para manter o contexto entre as interações
 
 ---
 
@@ -64,9 +67,10 @@ Define o formato do estado compartilhado entre os nós:
 
 ```python
 class AgentState(TypedDict):
-    mensagem: str
-    resposta: str
+    mensagens: List[BaseMessage]
 ```
+
+> Agora usamos `mensagens` ao invés de `mensagem/resposta`, para possibilitar a **memória conversacional**.
 
 ### 2. Modelo local com `OllamaLLM`
 
@@ -78,7 +82,7 @@ llm = OllamaLLM(model="gemma3")
 
 ### 3. Funções do agente
 
-- `calcular`: usa `eval()` para resolver perguntas matemáticas como "quanto é 10 \* 5"
+- `calcular`: usa `eval()` para resolver perguntas matemáticas como "quanto é 10 * 5"
 - `buscar`: retorna uma resposta genérica simulando uma base de dados
 - `decidir`: roteador inteligente que identifica qual nó seguir:
   - Se a pergunta contém "quanto é", envia para `calcular`
@@ -92,16 +96,28 @@ llm = OllamaLLM(model="gemma3")
 - A lógica de rota é definida em `add_conditional_edges`
 
 ```python
-lambda x: x["resposta"] if x["resposta"] in ["calculo", "busca"] else "fim"
+lambda x: x["fluxo"] if x["fluxo"] in ["calculo", "busca"] else "fim"
 ```
+
+### 5. Memória com `MemorySaver`
+
+```python
+from langgraph.checkpoint.memory import MemorySaver
+
+memory = MemorySaver()
+app = graph.compile(checkpointer=memory)
+```
+
+Com isso, o agente consegue lembrar interações anteriores dentro de uma mesma sessão.
 
 ---
 
-## 🧪 Exemplos para testar
+## 🔪 Exemplos para testar
 
 - `Quanto é 8 * 5?`
 - `Onde fica o Brasil?`
 - `Explique o que é LangGraph`
+- `Multiplique isso por 2` (após um cálculo anterior)
 
 ---
 
@@ -122,6 +138,8 @@ O nó `decidir` atua como um roteador automático:
 - Garante uma resposta contextual e adaptativa
 
 Esse mecanismo permite que o agente combine lógica determinística com a inteligência de um modelo local, criando um sistema responsivo e versátil.
+
+---
 
 ## 🔁 Executando após reiniciar o computador
 
@@ -151,4 +169,3 @@ Digite sua pergunta no primeiro terminal. Para encerrar, digite `sair`.
 ---
 
 ✅ Feito por **Magda Monteiro** para aprender sobre agentes inteligentes com modelos locais.
-
