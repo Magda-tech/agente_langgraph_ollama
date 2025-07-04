@@ -123,6 +123,31 @@ O nó `decidir` atua como um roteador automático:
 
 Esse mecanismo permite que o agente combine lógica determinística com a inteligência de um modelo local, criando um sistema responsivo e versátil.
 
+## 🔁 Executando após reiniciar o computador
+
+Sempre que desligar ou reiniciar seu computador, **não será necessário reinstalar nada**, apenas seguir os passos abaixo para reativar seu assistente:
+
+### 1. Abra dois terminais
+
+#### Terminal 1: Ative o ambiente Conda e rode o agente
+
+```bash
+conda activate langgraph_ollama
+cd agente_langgraph_ollama
+python agente_langgraph_ollama.py
+```
+
+#### Terminal 2: Inicie o modelo local via Ollama
+
+```bash
+ollama run gemma3
+```
+
+### ✅ Pronto!
+
+Agora você pode interagir normalmente com o assistente.\
+Digite sua pergunta no primeiro terminal. Para encerrar, digite `sair`.
+
 ---
 
 ✅ Feito por **Magda Monteiro** para aprender sobre agentes inteligentes com modelos locais.
