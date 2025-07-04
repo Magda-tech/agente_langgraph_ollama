@@ -12,7 +12,9 @@ Este guia explica como configurar e rodar um agente conversacional simples usand
 ## 🛠️ Como usar
 
 1. Clone o repositório para sua máquina usando o comando abaixo :
+   
 git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
+
 2. Crie um ambiente Conda no Anaconda Prompt:
    ```
    conda create -n langgraph_ollama python=3.10 # cria o ambiente
@@ -21,17 +23,19 @@ git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
    pip install -r requirements.txt              # instala os pacotes no ambiente ativo
 
    ```
-3. Inicie o modelo gemma3 (em outro terminal):
+   
+ 3. Inicie o modelo gemma3 (em outro terminal):
+    
    ```
   ollama run gemma3
-  
    ```
+
 4. Volte para o terminal no ambiente ativado langgraph_ollama e rode:
-   ```
-   pip install langchain-ollama
    
    ```
-5. Abra o VS Code, use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter e escolha o interpretador Python do ambiente Conda criado (langgraph_ollama).
+   pip install langchain-ollama
+    ```
+6. Abra o VS Code, use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter e escolha o interpretador Python do ambiente Conda criado (langgraph_ollama).
  
  Agora você pode rodar o arquivo Python direto no VS Code usando o botão de execução ou terminal integrado.
  Digite suas perguntas no terminal. Para sair, digite sair.
