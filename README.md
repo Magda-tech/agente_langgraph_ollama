@@ -13,7 +13,7 @@ Este guia explica como configurar e rodar um agente conversacional simples usand
 
 1. Clone o repositório para sua máquina usando o comando abaixo :
    
-git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
+  git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
 
 2. Crie um ambiente Conda no Anaconda Prompt:
    ```
