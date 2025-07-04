@@ -1,49 +1,101 @@
-# README - Agente LangGraph + Ollama (usando o modelo gemma3)
+# 🤖 Magda Assistente com LangGraph + Ollama
 
-Este guia explica como configurar e rodar um agente conversacional simples usando Python, LangGraph, Ollama, e o modelo local gemma3. Ideal para quem está começando com programação e ambientes virtuais.
+Este projeto implementa um agente inteligente local utilizando a biblioteca [LangGraph](https://python.langchain.com/docs/langgraph/) com suporte a modelos LLM via [Ollama](https://ollama.com/), permitindo interações personalizadas, incluindo cálculo, busca simulada e respostas com LLMs locais.
 
-## 🚀 Pré-requisitos
+## 🚀 Visão geral
 
-1. **Baixe e instale o Python 3.10 no seu computador.**
-2. **Anaconda Prompt (recomendado)**
-3. **Ollama instalado**: https://ollama.com/download
-4. **Modelo gemma3 baixado**:
-  
+O agente é composto por:
+
+- Um **grafo de decisão** construído com `StateGraph` do LangGraph
+- Um modelo local rodando com o **Ollama** (neste caso, `gemma3`)
+- Três funções principais:
+  - `calcular`: resolve perguntas matemáticas simples
+  - `buscar`: simula uma busca local
+  - `decidir`: atua como um roteador inteligente entre as opções acima ou aciona o modelo LLM para perguntas abertas
+
+---
+
 ## 🛠️ Como usar
 
-1. Clone o repositório para sua máquina usando o comando abaixo :
-   
-  git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
+1. Clone o repositório para sua máquina:
 
-2. Crie um ambiente Conda no Anaconda Prompt:
-   ```
-   conda create -n langgraph_ollama python=3.10 # cria o ambiente
-   conda activate langgraph_ollama              # ativa o ambiente
-   cd agente_langgraph_ollama                   # entra na pasta onde está o arquivo requirements.txt
-   pip install -r requirements.txt              # instala os pacotes no ambiente ativo
+```bash
+git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
+```
 
-   ```
-   
- 3. Inicie o modelo gemma3 (em outro terminal):
-    
-   ```
-  ollama run gemma3
-   ```
+2. Crie e ative o ambiente Conda:
 
-4. Volte para o terminal no ambiente ativado langgraph_ollama e rode:
-   
-  ```
-  pip install langchain-ollama
-  ```
-    
-6. Abra o VS Code:
+```bash
+conda create -n langgraph_ollama python=3.10
+conda activate langgraph_ollama
+cd agente_langgraph_ollama
+pip install -r requirements.txt
+```
 
- use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter,
- escolha o interpretador Python do ambiente Conda criado (langgraph_ollama).
- 
- Agora você pode rodar o arquivo Python (agente_langgraph_ollama.py) direto no VS Code usando o botão de execução ou terminal integrado.
- Digite suas perguntas no terminal. 
- Para sair, digite sair.
+3. Instale o pacote para conectar com o Ollama:
+
+```bash
+pip install langchain-ollama
+```
+
+4. Em outro terminal, inicie o modelo local:
+
+```bash
+ollama run gemma3
+```
+
+5. No VS Code:
+
+   - Pressione `Ctrl+Shift+P`
+   - Escolha `Python: Select Interpreter`
+   - Selecione o ambiente `langgraph_ollama`
+
+6. Execute o arquivo `agente_langgraph_ollama.py` diretamente no terminal ou pelo botão de execução do VS Code.
+
+Agora você pode digitar perguntas diretamente no terminal. Para sair, digite `sair`.
+
+---
+
+## 🧠 Como funciona o código
+
+### 1. Esquema de estado com `TypedDict`
+
+Define o formato do estado compartilhado entre os nós:
+
+```python
+class AgentState(TypedDict):
+    mensagem: str
+    resposta: str
+```
+
+### 2. Modelo local com `OllamaLLM`
+
+Carrega o modelo `gemma3` via Ollama:
+
+```python
+llm = OllamaLLM(model="gemma3")
+```
+
+### 3. Funções do agente
+
+- `calcular`: usa `eval()` para resolver perguntas matemáticas como "quanto é 10 \* 5"
+- `buscar`: retorna uma resposta genérica simulando uma base de dados
+- `decidir`: roteador inteligente que identifica qual nó seguir:
+  - Se a pergunta contém "quanto é", envia para `calcular`
+  - Se contém "onde" ou "quando", envia para `buscar`
+  - Caso contrário, usa o LLM local para gerar uma resposta
+
+### 4. Grafo com LangGraph
+
+- O grafo é criado com `StateGraph`
+- Os nós são adicionados com `add_node()` usando `RunnableLambda`
+- A lógica de rota é definida em `add_conditional_edges`
+
+```python
+lambda x: x["resposta"] if x["resposta"] in ["calculo", "busca"] else "fim"
+```
+
+---
 
 ## 🧪 Exemplos para testar
 
@@ -52,12 +104,26 @@ Este guia explica como configurar e rodar um agente conversacional simples usand
 - `Explique o que é LangGraph`
 
 ---
-# Arquivos principais
 
-agente_langgraph_ollama.py — código principal do agente
+## 📂 Arquivos principais
 
-requirements.txt — dependências Python
+- `agente_langgraph_ollama.py`: código principal do agente
+- `requirements.txt`: dependências Python
+- `.gitignore`: arquivos ignorados pelo Git
 
-.gitignore — arquivos ignorados no repositório
+---
 
-✅ Feito por Magda Monteiro para aprender sobre agentes inteligentes com modelos locais.
+## 💡 Sobre o decisor inteligente
+
+O nó `decidir` atua como um roteador automático:
+
+- Analisa a mensagem de entrada
+- Direciona o fluxo do grafo para o nó adequado (`calculo`, `busca` ou `LLM`)
+- Garante uma resposta contextual e adaptativa
+
+Esse mecanismo permite que o agente combine lógica determinística com a inteligência de um modelo local, criando um sistema responsivo e versátil.
+
+---
+
+✅ Feito por **Magda Monteiro** para aprender sobre agentes inteligentes com modelos locais.
+
