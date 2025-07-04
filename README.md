@@ -32,9 +32,10 @@ Este guia explica como configurar e rodar um agente conversacional simples usand
 
 4. Volte para o terminal no ambiente ativado langgraph_ollama e rode:
    
-   ```
+  ```
   pip install langchain-ollama
-    ```
+  ```
+    
 6. Abra o VS Code:
 
  use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter
