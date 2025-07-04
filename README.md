@@ -1,8 +1,6 @@
 # 🤖 Magda Assistente com LangGraph + Ollama
 
-Este projeto implementa um agente inteligente local utilizando a biblioteca [LangGraph](https://python.langchain.com/docs/langgraph/) com suporte a modelos LLM via [Ollama](https://ollama.com/), permitindo interações personalizadas, incluindo cálculo, busca simulada e respostas com LLMs locais.
-
-Agora com suporte a **memória de contexto**, o assistente lembra das mensagens anteriores dentro da sessão.
+Este projeto implementa um agente inteligente local utilizando a biblioteca [LangGraph](https://python.langchain.com/docs/langgraph/) com suporte a modelos LLM via [Ollama](https://ollama.com/), permitindo interações personalizadas, incluindo cálculo, busca simulada e respostas com LLMs locais. Com suporte a **memória de contexto**, o assistente lembra das mensagens anteriores dentro da sessão.
 
 ## 🚀 Visão geral
 
