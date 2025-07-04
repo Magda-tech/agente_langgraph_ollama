@@ -68,7 +68,7 @@ class AgentState(TypedDict):
     mensagens: List[BaseMessage]
 ```
 
-> Agora usamos `mensagens` ao invés de `mensagem/resposta`, para possibilitar a **memória conversacional**.
+> Usamos `mensagens` ao invés de `mensagem/resposta`, para possibilitar a **memória conversacional**.
 
 ### 2. Modelo local com `OllamaLLM`
 
@@ -113,9 +113,8 @@ Com isso, o agente consegue lembrar interações anteriores dentro de uma mesma 
 ## 🔪 Exemplos para testar
 
 - `Quanto é 8 * 5?`
-- `Onde fica o Brasil?`
-- `Explique o que é LangGraph`
 - `Multiplique isso por 2` (após um cálculo anterior)
+- `Onde fica o Brasil?`
 
 ---
 
