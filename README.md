@@ -33,9 +33,12 @@ git clone https://github.com/Magda-tech/agente_langgraph_ollama.git
 4. Volte para o terminal no ambiente ativado langgraph_ollama e rode:
    
    ```
-   pip install langchain-ollama
+  pip install langchain-ollama
     ```
-6. Abra o VS Code, use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter e escolha o interpretador Python do ambiente Conda criado (langgraph_ollama).
+6. Abra o VS Code:
+
+ use o comando Ctrl+Shift+P (Windows) e selecione Python: Select Interpreter
+ escolha o interpretador Python do ambiente Conda criado (langgraph_ollama).
  
  Agora você pode rodar o arquivo Python direto no VS Code usando o botão de execução ou terminal integrado.
  Digite suas perguntas no terminal. Para sair, digite sair.
